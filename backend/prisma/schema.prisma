@@ -1,0 +1,235 @@
+enum ProgramType {
+  POINTS
+  CASHBACK
+  STAMPS
+}
+
+enum WalletPlatform {
+  APPLE
+  GOOGLE
+}
+
+enum TransactionType {
+  EARN
+  REDEEM
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Customer {
+  id           String            @id @default(cuid())
+  code         String            @unique              // ← NUEVO
+  phone        String            @unique
+  idNumber     String
+  name         String
+  email         String?      @unique 
+  verified     Boolean           @default(false)
+  createdAt    DateTime          @default(now())
+  updatedAt    DateTime          @updatedAt
+  programs     CustomerProgram[]
+  merchant     Merchant?         @relation(fields: [merchantId], references: [id])
+  merchantId   String?
+  vouchers     Voucher[]
+  passes       Pass[]
+}
+
+model Pass {
+  id            String   @id @default(cuid())
+  code          String   @unique
+  customerId    String
+  programId     String
+  merchantId    String
+  status        String   @default("active") // "active" o "inactive"
+  createdAt     DateTime @default(now())
+  expiresAt     DateTime?
+
+  // Relaciones (si ya tienes los modelos de Customer, Program y Merchant)
+  customer      Customer @relation(fields: [customerId], references: [id])
+  program       LoyaltyProgram  @relation(fields: [programId], references: [id])
+  merchant      Merchant @relation(fields: [merchantId], references: [id])
+  appleWalletUrl String?  // URL del archivo .pkpass subido a S3
+  googleWalletUrl String? // JWT generado para Google Wallet
+
+}
+
+
+model LoyaltyProgram {
+  id         String   @id @default(cuid())
+  code       String   @unique              // ← NUEVO
+  name       String
+  type       String // POINTS, CASHBACK, STAMPS
+  merchantId String
+  merchant   Merchant @relation(fields: [merchantId], references: [id])
+  createdAt  DateTime @default(now())
+
+  customerPrograms CustomerProgram[]
+  vouchers         Voucher[]
+  rewards          Reward[]
+  pass             Pass[]
+}
+
+model CustomerProgram {
+  id                String   @id @default(cuid())
+  customerId        String
+  programId         String
+  branchId          String?
+
+  customer          Customer        @relation(fields: [customerId], references: [id])
+  program           LoyaltyProgram  @relation(fields: [programId], references: [id])
+  branch            Branch?         @relation(fields: [branchId], references: [id])
+
+  pointsBalance     Int      @default(0)
+  cashbackBalance   Float    @default(0.0)
+  stampsBalance     Int      @default(0)
+
+  walletPassId      String?
+  walletPlatform    String?
+
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  transactions      Transaction[]
+}
+
+model Transaction {
+  id                  String           @id @default(cuid())
+  code                String           @unique              // ← NUEVO
+  customerProgramId   String
+  branchId            String?
+
+  type                TransactionType
+  amount              Float
+  createdAt           DateTime         @default(now())
+
+  customerProgram     CustomerProgram  @relation(fields: [customerProgramId], references: [id])
+  Branch              Branch?          @relation(fields: [branchId], references: [id])
+}
+
+model Merchant {
+  id           String   @id @default(cuid())
+  code         String   @unique              // ← NUEVO
+  name         String
+  email        String   @unique
+  phone        String
+  logoUrl      String?
+  primaryColor String?
+  isActive     Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  programs     LoyaltyProgram[]
+  customers    Customer[]
+  rewards      Reward[]
+  branches     Branch[]
+  Subscription Subscription[]
+  Invoice      Invoice[]
+  passes        Pass[]
+}
+
+model Subscription {
+  id         String   @id @default(cuid())
+  merchant   Merchant @relation(fields: [merchantId], references: [id])
+  merchantId String
+  plan       String
+  startDate  DateTime
+  endDate    DateTime
+  status     String
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  invoices Invoice[]
+}
+
+model Invoice {
+  id         String   @id @default(cuid())
+  merchant   Merchant @relation(fields: [merchantId], references: [id])
+  merchantId String
+
+  subscription   Subscription? @relation(fields: [subscriptionId], references: [id])
+  subscriptionId String?
+
+  amount    Float
+  currency  String
+  status    String
+  issuedAt  DateTime
+  pdfUrl    String?
+  createdAt DateTime @default(now())
+}
+
+model AdminUser {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String
+  password  String
+  role      String
+  active    Boolean  @default(true)
+  createdAt DateTime @default(now())
+
+  logs AdminLog[]
+}
+
+model AdminLog {
+  id          String    @id @default(cuid())
+  admin       AdminUser @relation(fields: [adminId], references: [id])
+  adminId     String
+  action      String
+  description String
+  timestamp   DateTime  @default(now())
+}
+
+model Reward {
+  id          String          @id @default(cuid())
+  code        String          @unique
+  name        String
+  description String?
+  imageUrl    String?
+  cost        Int             // Costo en puntos
+  programId   String
+  program     LoyaltyProgram  @relation(fields: [programId], references: [id])
+  merchantId  String
+  merchant    Merchant        @relation(fields: [merchantId], references: [id])
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @updatedAt
+
+
+  vouchers    Voucher[]
+}
+
+model Voucher {
+  id         String         @id @default(cuid())
+  code       String         @unique              // ← YA EXISTÍA, OK
+  customer   Customer       @relation(fields: [customerId], references: [id])
+  customerId String
+  reward     Reward         @relation(fields: [rewardId], references: [id])
+  rewardId   String
+  program    LoyaltyProgram @relation(fields: [programId], references: [id])
+  programId  String
+  status     String
+  issuedAt   DateTime       @default(now())
+  redeemedAt DateTime?
+}
+
+model Branch {
+  id               String             @id @default(cuid())
+  code             String             @unique              // ← NUEVO
+  name             String
+  address          String?
+  phone            String?
+  latitude         Float?
+  longitude        Float?
+  createdAt        DateTime           @default(now())
+  updatedAt        DateTime           @updatedAt
+
+  merchantId       String
+  merchant         Merchant           @relation(fields: [merchantId], references: [id])
+
+  customerPrograms CustomerProgram[]
+  transactions     Transaction[]
+}

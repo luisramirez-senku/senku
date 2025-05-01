@@ -1,0 +1,94 @@
+/* src/styles/ProgramDesignForm.module.css */
+
+.container {
+  display: flex;
+  flex-direction: row;
+  gap: 2rem;
+  padding: 2rem;
+}
+
+.formSection {
+  flex: 1;
+  background-color: #ffffff;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.previewSection {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.title {
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: #333333;
+  margin-bottom: 1.5rem;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+}
+
+.field label {
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+  color: #333333;
+}
+
+.field input[type="text"],
+.field select {
+  padding: 0.5rem 1rem;
+  border: 1px solid #cccccc;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+.field input[type="color"] {
+  width: 60px;
+  height: 40px;
+  border: none;
+  cursor: pointer;
+  background: none;
+}
+
+.nextButton {
+  background-color: #ff4eb8; /* Rosa aprobado */
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 2rem;
+  transition: background-color 0.3s ease;
+}
+
+.nextButton:hover {
+  background-color: #e13ea4;
+}
+
+.previewPlaceholder {
+  width: 300px;
+  height: 600px;
+  background-color: #f4f4f5;
+  border-radius: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #999999;
+  font-size: 1rem;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}

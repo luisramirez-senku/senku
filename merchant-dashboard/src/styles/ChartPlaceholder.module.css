@@ -1,0 +1,26 @@
+.chartContainer {
+    background-color: #ffffff;
+    padding: 1.5rem;
+    border-radius: 0.75rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  }
+  
+  .chartTitle {
+    color: #555555;
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+  }
+  
+  .chartBox {
+    height: 16rem;
+    background-color: #f4f4f4;
+    border-radius: 0.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .chartText {
+    color: #999999;
+  }
+  

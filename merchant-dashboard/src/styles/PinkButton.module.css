@@ -1,0 +1,17 @@
+/* src/styles/PinkButton.module.css */
+.pinkButton {
+    background-color: #ff4eb8;
+    color: white;
+    border: none;
+    padding: 0.75rem 2rem;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .pinkButton:hover {
+    background-color: #e13ea4;
+  }
+  

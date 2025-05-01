@@ -1,0 +1,68 @@
+.sidebar {
+    background-color: #ff4eb8;
+    color: white;
+    height: 100vh;
+    transition: width 0.3s ease;
+    overflow: hidden;
+  }
+  
+  .open {
+    width: 240px;
+  }
+  
+  .closed {
+    width: 80px;
+  }
+  
+  .topSection {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem;
+  }
+  
+  .logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    white-space: nowrap;
+  }
+  
+  .hamburger {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+  }
+  
+  .nav ul {
+    list-style: none;
+    padding: 0;
+    margin-top: 2rem;
+  }
+  
+  .nav li {
+    display: flex;
+    align-items: center;
+    padding: 1rem 1.5rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    text-decoration: none;
+    color: white;
+  }
+  
+  .nav li:hover {
+    background-color: #e13ea4;
+  }
+  
+  .icon {
+    font-size: 1.5rem;
+    margin-right: 12px; /* 🚀 Aquí está el cambio real del gap */
+    flex-shrink: 0;
+  }
+  
+  .nav li span {
+    white-space: nowrap;
+    overflow: hidden;
+  }
+  

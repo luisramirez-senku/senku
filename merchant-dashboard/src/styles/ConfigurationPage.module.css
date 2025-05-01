@@ -1,0 +1,88 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Solo si quieres altura completa */
+  padding: 2rem;
+}
+
+  
+  .formSection {
+    flex: 1;
+    background-color: #ffffff;
+    padding: 2rem;
+    border-radius: 8px;
+  }
+  
+  .previewSection {
+    width: 320px;
+    text-align: center;
+  }
+  
+  .title {
+    font-size: 1.75rem;
+    margin-bottom: 1.5rem;
+    color: #1A73E8;
+    font-weight: 600;
+  }
+  
+  .form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .label {
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+  }
+  
+  .input,
+  .textarea {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #cccccc;
+    border-radius: 6px;
+    font-size: 1rem;
+  }
+  
+  .textarea {
+    resize: vertical;
+    min-height: 100px;
+  }
+  
+  .button {
+    background-color: #ff4eb8;
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 1rem;
+    transition: background-color 0.2s ease-in-out;
+  }
+  
+  .button:hover {
+    background-color: #e13ea4;
+  }
+  
+  .previewTitle {
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+  }
+  
+  .phoneMockup {
+    width: 100%;
+    height: 600px;
+    background-color: #f4f4f5;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .previewPlaceholder {
+    color: #888888;
+    font-size: 1rem;
+  }
+  

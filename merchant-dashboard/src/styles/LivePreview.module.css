@@ -1,0 +1,61 @@
+.mockupContainer {
+  position: relative;
+  width: 250px;
+  height: 500px;
+  background-color: #f4f4f5;
+  border-radius: 40px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+}
+
+.notch {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 120px;
+  height: 30px;
+  background-color: black;
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+  z-index: 2;
+}
+
+.buttonSide {
+  position: absolute;
+  right: -5px;
+  top: 100px;
+  width: 6px;
+  height: 60px;
+  background-color: black;
+  border-radius: 3px;
+}
+
+.card {
+  width: 100%;
+  height: 100%;
+  padding: 2rem 1rem;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.programName {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.description {
+  font-size: 0.9rem;
+  margin-bottom: 2rem;
+}
+
+.barcode {
+  font-family: monospace;
+  font-size: 1rem;
+  letter-spacing: 2px;
+}
